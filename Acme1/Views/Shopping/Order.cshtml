@@ -1,0 +1,111 @@
+﻿@model Acme1.Models.Product
+
+@{
+    ViewBag.Title = "Order";
+}
+
+<style>
+/* only needed on order page, so adjust if necessary*/
+.order_label {
+    display: inline;
+}
+</style>
+
+<h2>Order</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>Product</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.ProductID)
+
+        <div class="row">
+            @*<div class="form-group">*@
+                <div class="col-md-2">
+                    <img src="~/Content/Images/Products/@Html.DisplayFor(modelItem => Model.ImageFile)" class="img-products-index" />
+                </div>
+            @*</div>*@
+
+            @*<div class="form-group">*@
+            <div class="col-md-2">
+                @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "order_label" })
+            </div>
+            <div class="col-md-8">
+                @Html.DisplayFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                @*@Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })*@
+            </div>
+            @*</div>*@
+
+            @*<div class="form-group">
+                @Html.LabelFor(model => model.ShortDescription, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-8">
+                    @Html.EditorFor(model => model.ShortDescription, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.ShortDescription, "", new { @class = "text-danger" })
+                </div>
+            </div>*@
+
+            @*<div class="form-group">*@
+            <div class="col-md-2">
+                @Html.LabelFor(model => model.LongDescription, htmlAttributes: new { @class = "order_label" })
+            </div>
+            <div class="col-md-8">
+                @Html.DisplayFor(model => model.LongDescription, new { htmlAttributes = new { @class = "form-control" } })
+                @*@Html.ValidationMessageFor(model => model.LongDescription, "", new { @class = "text-danger" })*@
+            </div>
+                @*</div>*@
+
+                @*<div class="form-group">
+                @Html.LabelFor(model => model.CategoryID, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-8">
+                    @Html.EditorFor(model => model.CategoryID, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.CategoryID, "", new { @class = "text-danger" })
+                </div>
+            </div>*@
+
+                @*<div class="form-group">
+                @Html.LabelFor(model => model.ImageFile, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-8">
+                    @Html.EditorFor(model => model.ImageFile, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.ImageFile, "", new { @class = "text-danger" })
+                </div>
+            </div>*@
+
+            <div class="col-md-2">
+                @Html.LabelFor(model => model.UnitPrice, htmlAttributes: new { @class = "order_label" })
+            </div>
+            <div class="col-md-8">
+                $@Html.DisplayFor(model => model.UnitPrice, new { htmlAttributes = new { @class = "form-control" } })
+                @*@Html.ValidationMessageFor(model => model.UnitPrice, "", new { @class = "text-danger" })*@
+            </div>
+                
+
+                @*<div class="form-group">
+                @Html.LabelFor(model => model.OnHand, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-8">
+                    @Html.EditorFor(model => model.OnHand, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.OnHand, "", new { @class = "text-danger" })
+                </div>
+            </div>*@
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-12">
+                <input type="submit" value="Add To Cart" class="btn btn-default" />
+            </div>
+        </div>
+
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>

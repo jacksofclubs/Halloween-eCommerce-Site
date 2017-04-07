@@ -1,0 +1,95 @@
+﻿@model Acme1.Models.Product
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+
+@using (Html.BeginForm("Delete", "Product", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <h3>Are you sure you want to delete this?</h3>
+    <div>
+        <h4>Product</h4>
+        @Html.HiddenFor(model => model.ProductID)
+        @Html.HiddenFor(model => model.Name)
+        @Html.HiddenFor(model => model.ShortDescription)
+        @Html.HiddenFor(model => model.LongDescription)
+        @Html.HiddenFor(model => model.ImageFile)
+        @Html.HiddenFor(model => model.CategoryID)
+        @Html.HiddenFor(model => model.UnitPrice)
+        @Html.HiddenFor(model => model.OnHand)
+        
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Name)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Name)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.ShortDescription)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.ShortDescription)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.LongDescription)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.LongDescription)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.CategoryID)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.CategoryID)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.ImageFile)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.ImageFile)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.UnitPrice)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.UnitPrice)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.OnHand)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.OnHand)
+            </dd>
+
+        </dl>
+
+
+    </div>
+
+    <div class="form-actions no-color">
+        <input type="submit" value="Delete" class="btn btn-default" /> |
+        @Html.ActionLink("Back to List", "Index")
+    </div>
+}
+
+

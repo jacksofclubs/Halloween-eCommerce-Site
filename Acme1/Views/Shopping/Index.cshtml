@@ -1,0 +1,39 @@
+﻿@model IEnumerable<Acme1.Models.Product>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+@if (Model.Count() > 0)
+{
+    <span style="font-size:xx-large">@ViewBag.CategoryId</span>
+    <br /><br />
+    int i = 0;
+    foreach (var item in Model)
+    {
+        if (i == 0)
+        {
+            @Html.Raw("<div class='row shoppingIndex'>");
+        }
+        i += 1;
+        <div class="col-md-4 center">
+            <a href="~/Shopping/Order/@item.ProductID">
+                <img src="~/Content/Images/Products/@item.ImageFile" class="img-products-index" />
+            </a>
+            <br />
+            <a href="~/Shopping/Order/@item.ProductID">@item.Name</a>
+        </div>
+        if (i == 3)
+        {
+            @Html.Raw("</div>");
+            i = 0;
+        }
+    }
+    if (i != 0)
+    {
+        @Html.Raw("</div>");
+    }
+} else
+{
+    <span style="font-size:xx-large;color:red">INVALID DATA!!!!!</span>
+}

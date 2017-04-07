@@ -1,0 +1,17 @@
+﻿.shopping-content {
+    background-color: white;
+}
+.shoppingIndex {
+    display: inline;
+}
+.center {
+    text-align: center;
+}
+.img-products-index {
+    width: 170px;
+    height: 200px;
+}
+/* only needed on order page, so adjust if necessary*/
+.order_label {
+    display: inline;
+}
