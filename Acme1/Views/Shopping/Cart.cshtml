@@ -75,12 +75,13 @@
 </table>*@
 
 <script>
-    function fsubmit(udaction, id) {
+    function fsubmit(udaction, qty, prodid) {
         document.getElementsByName('action')[0].value = udaction;
-        document.getElementsByName('rowid')[0].value = id;
+        document.getElementsByName('prodid')[0].value = document.getElementsByName(prodid)[0].value;
+        document.getElementsByName('qty')[0].value = document.getElementsByName(qty)[0].value;
         if (udaction == "update") {
             var rx = new RegExp("^(([1-9])|([1-9][0-9]))$");
-            strval = document.getElementsByName('qty:' + id)[0].value;
+            strval = document.getElementsByName(qty)[0].value;
             if (!rx.test(strval)) alert('Quantity is not valid')
             else document.forms[0].submit();
         }
@@ -92,20 +93,23 @@
 {
     <br />
     <input type="hidden" name="action" value="none" />
-    <input type="hidden" name="rowid" value="0" />
+    <input type="hidden" name="cartid" value="100" />
+    <input type="hidden" name="prodid" value="" />
+    <input type="hidden" name="qty" value="" />
+
     int x = 0;
-    string qtyname = "";
-    string prodname = "";
+    string qty = "";
+    string prodid = "";
     foreach (var item in Model)
     {
         x = x + 1;
-        qtyname = "qty:" + @x;
-        prodname = "prod:" + @x;
-        <input type="hidden" name="@prodname" value="@item.ProductID" />
+        qty = "qty_" + @x;
+        prodid = "prod_" + @x;
+        <input type="hidden" name="@prodid" value="@item.ProductID" />
         @Html.ActionLink(@item.Name, "Order", new { id = @item.ProductID })<br />
-        <input maxlength="2" size="2" name="@qtyname" type="text"
+        <input maxlength="2" size="2" name="@qty" type="text"
                value="@item.Quantity" />
-        <a href='javascript:fsubmit("update",@x);'>Update</a>
-        <a href='javascript:fsubmit("delete",@x);'>Delete</a><br /><br />
+        <a href='javascript:fsubmit("update", "@qty", "@prodid");'>Update</a>
+        <a href='javascript:fsubmit("delete", "@qty", "@prodid");'>Delete</a><br /><br />
     } @*for each*@
 }@* end of BeginForm*@

@@ -15,30 +15,23 @@ namespace Acme1.Models
         [MaxLength(10)]
         public string ProductID { get; set; }
 
-        [Required]
         [MaxLength(20)]
         public string Name { get; set; }
 
-        [Required]
         [MaxLength(100)]
         public string ShortDescription { get; set; }
 
-        [Required]
         [MaxLength(200)]
         public string LongDescription { get; set; }
 
-        [Required]
         [MaxLength(10)]
         public string CategoryID { get; set; }
 
-        [Required]
         [MaxLength(30)]
         public string ImageFile { get; set; }
 
-        [Required]
         public decimal UnitPrice { get; set; }
 
-        [Required]
         public int OnHand { get; set; }
 
         public static Product GetProductSingle(SqlConnection dbcon, string id)

@@ -103,14 +103,15 @@ namespace Acme1.Controllers
         public ActionResult Cart(FormCollection fc)
         {
             string straction = fc["action"].ToString();
-            int rowid = Convert.ToInt32(fc["rowid"].ToString());
-            string prodid = fc["prod:" + rowid].ToString();
-            string strqty = fc["qty:" + rowid].ToString();
+            //int rowid = Convert.ToInt32(fc["rowid"].ToString());
+            string cartid = fc["cartid"].ToString();
+            string prodid = fc["prodid"].ToString();
+            string strqty = fc["qty"].ToString();
 
             // Validate
             dbcon = GetConnection();
             dbcon.Open();
-            CartLineItem.CUDCart(dbcon, straction, rowid, prodid, Int32.Parse(strqty));
+            CartLineItem.CUDCart(dbcon, straction, Int32.Parse(cartid), prodid, Int32.Parse(strqty));
             dbcon.Close();  
 
             return RedirectToAction("Cart");
