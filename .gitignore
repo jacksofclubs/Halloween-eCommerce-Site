@@ -47,5 +47,5 @@ Temporary Items
 .apdisk
 
 # ASP.NET project files unable to commit
-Acme1/App_Data/acmedb.mdf
-Acme1/App_Data/acmedb_log.ldf
+*Acme1/App_Data/acmedb.mdf
+*Acme1/App_Data/acmedb_log.ldf
