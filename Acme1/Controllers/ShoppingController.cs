@@ -115,8 +115,8 @@ namespace Acme1.Controllers
                 int intresult = 0;
                 int rowid = Convert.ToInt32(fc["rowid"].ToString());
                 string strprodid = fc["prod:" + rowid].ToString();
-                // int cartid = 100;
-                int cartid = 0;
+                int cartid = 100;
+                //int cartid = 0;
                 if (Session["cartnumber"] != null)
                     cartid = Convert.ToInt32(Session["cartnumber"].ToString());
                 dbcon = GetConnection();
