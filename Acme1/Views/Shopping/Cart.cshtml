@@ -107,8 +107,7 @@
         prodid = "prod_" + @x;
         <input type="hidden" name="@prodid" value="@item.ProductID" />
         @Html.ActionLink(@item.Name, "Order", new { id = @item.ProductID })<br />
-        <input maxlength="2" size="2" name="@qty" type="text"
-               value="@item.Quantity" />
+        <input maxlength="2" size="2" name="@qty" type="text" value="@item.Quantity" />
         <a href='javascript:fsubmit("update", "@qty", "@prodid");'>Update</a>
         <a href='javascript:fsubmit("delete", "@qty", "@prodid");'>Delete</a><br /><br />
     } @*for each*@
