@@ -34,6 +34,10 @@ namespace Acme1.Controllers
             LoginVM loginvm = new LoginVM();
             ViewBag.message = "";
             return View(loginvm);
+            //LoginVM loginvm = new LoginVM();
+            //ViewBag.returnurl = Request.QueryString["returnurl"].ToString();
+            //ViewBag.message = "";
+            //return View(loginvm);
         }
 
         [HttpPost]

@@ -19,7 +19,9 @@ namespace Acme1.Controllers
             ConnectionStrings["ACMEdb"].ConnectionString.ToString());
             return dbcon;
         }
-        // GET: Customer
+
+        [Authorize]
+        [HttpGet]
         public ActionResult Update()
         {
             Customer cust;
@@ -30,13 +32,71 @@ namespace Acme1.Controllers
             {
                 dbcon = GetConnection();
                 dbcon.Open();
+                TempData["statelist"] = GetStatesDropDown(dbcon);
                 cust = Customer.GetCustomerSingle(dbcon, custid, "");
+                ViewBag.message = "Make your changes and click Update button";
                 dbcon.Close();
             } catch (Exception ex)
             {
                 throw new Exception(ex.Message);
             }
             return View(cust);
+        }
+
+        [Authorize]
+        [HttpPost]
+        public ActionResult Update2(Customer ncust)
+        {
+            if (ModelState.IsValid)
+            {
+                int id = Convert.ToInt32(Session["custid"].ToString());
+                int intresult = 0;
+                Customer ocust, tcust;
+                try
+                {
+                    dbcon = GetConnection();
+                    dbcon.Open();
+                    ocust = Customer.GetCustomerSingle(dbcon, id, "");
+                    if (ncust.Email == ocust.Email)
+                    {
+                        intresult = Customer.CUDCustomer(dbcon, "update", ncust);
+                        ViewBag.message = "Profile updated - Click Menu button to continue";
+                    } else
+                    {
+                        tcust = Customer.GetCustomerSingle(dbcon, 0, ncust.Email);
+                        if (tcust.CustNumber == 0)
+                        {
+                            intresult = Customer.CUDCustomer(dbcon, "update", ncust);
+                            ViewBag.message = "Profile updated - Click Menu button to continue";
+                        } else ViewBag.error = "Update cancelled - Email Address already exists";
+                    }
+                    dbcon.Close();
+                    return View(ncust);
+                } catch (Exception ex)
+                {
+                    throw new Exception(ex.Message);
+                }
+            }
+            ViewBag.error = "Serious Error";
+            return View(ncust);
+        }
+
+        public IEnumerable<SelectListItem> GetStatesDropDown(SqlConnection dbcon)
+        {
+            IList<SelectListItem> ddlist = new List<SelectListItem>();
+            string strsql = "select * from States";
+            SqlCommand cmd = new SqlCommand(strsql, dbcon);
+            SqlDataReader myReader;
+            myReader = cmd.ExecuteReader();
+            while (myReader.Read())
+            {
+                ddlist.Add(new SelectListItem() {
+                    Text = myReader["S_NAME"].ToString(),
+                    Value = myReader["S_ABBREVIATION"].ToString()
+                });
+            }
+            myReader.Close();
+            return ddlist;
         }
     }
 }
