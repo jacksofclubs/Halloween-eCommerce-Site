@@ -1,0 +1,33 @@
+﻿@*@model Acme1.Models.ViewModels.MyOrdersVM
+@{ ViewBag.Title = "MyOrders";}
+@if (Model.Invoices.Count == 0)
+{
+    <span>You have no orders on file</span>
+} else
+{
+    <table style="background-color:white" border="1">
+        <caption><span style="font-size:larger;">My Orders</span></caption>
+        <tr style="color:White;background-color:#990000;font-weight:bold;">
+            <td></td>
+            <td><b>Invoice#</b></td>
+            <td><b>Order Date</b></td>
+            <td style="text-align:right"><b>Total</b></td>
+        </tr>
+        @foreach (var item in Model.Invoices)
+        {
+            <tr>
+                <td>
+                    @Html.ActionLink("View", "MyOrders",
+new { id = item.InvoiceNumber })
+            </td>
+            <td>@item.InvoiceNumber</td>
+            <td>@String.Format("{0:d}", @item.OrderDate)</td>
+            <td style="text-align:right">$@String.Format("{0:n2}", @item.Total)</td>
+        </tr>*@
+        @*} @*for each*@*@
+    @*</table>
+    if (Model.SelectedInvoiceNumber > 0)
+    {*@
+        @*add your html here *@
+    @*}*@@*end of selected invoice details *@
+@*}*@@* end of when data present block *@

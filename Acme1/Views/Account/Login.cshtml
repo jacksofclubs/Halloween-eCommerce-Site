@@ -1,0 +1,46 @@
+﻿@model Acme1.Models.ViewModels.LoginVM
+
+@{ ViewBag.Title = "Login";}
+<h2>Login</h2>
+<span style="color:red;">@ViewBag.message</span>
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary(true)
+    <div class="editor-label">
+        @Html.LabelFor(model => model.Username)
+    </div>
+    <div class="editor-field">
+        @Html.EditorFor(model => model.Username,
+new {
+    htmlAttributes = new {
+        @class = "form-control",
+        @style = "width:440px",
+        @maxlength = "50"
+    }
+})
+        @Html.ValidationMessageFor(model => model.Username)
+    </div>
+    <div class="editor-label">
+        @Html.LabelFor(model => model.Password)
+    </div>
+    <div class="editor-field">
+        @Html.PasswordFor(model => model.Password,
+new {
+    htmlAttributes = new {
+        @class = "form-control",
+        @style = "width:190px",
+        @maxlength = "20"
+    }
+})
+        @Html.ValidationMessageFor(model => model.Password)
+    </div>
+    <br />
+    <input type="submit" value="Login" />
+    @Html.RouteLink("New User", new {
+    action = "Create",
+    controller = "Account",
+    returnurl = ViewBag.returnurl
+})
+}
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>

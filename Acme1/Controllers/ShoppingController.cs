@@ -74,7 +74,11 @@ namespace Acme1.Controllers
                 {
                     dbcon = GetConnection();
                     dbcon.Open();
-                    cart.CartNumber = 100;
+                    //cart.CartNumber = 100;
+                    // if no cart number exists
+                    if (Session["cartnumber"] == null)
+                        Session["cartnumber"] = Utility.GetIdNumber(dbcon, "CartNumber");
+                    cart.CartNumber = Convert.ToInt32(Session["cartnumber"].ToString());
                     int intresult = CartLineItem.CartUpSert(dbcon, cart);
                     dbcon.Close();
                 } catch (Exception ex) { throw new Exception(ex.Message); }
@@ -86,7 +90,10 @@ namespace Acme1.Controllers
         public ActionResult Cart()
         {
             List<Cartvm1> cart;
-            int cartid = 100;
+            // int cartid = 100;
+            int cartid = 0;
+            if (Session["cartnumber"] != null)
+                cartid = Convert.ToInt32(Session["cartnumber"].ToString());
             try
             {
                 dbcon = GetConnection();
@@ -102,19 +109,45 @@ namespace Acme1.Controllers
         [HttpPost]
         public ActionResult Cart(FormCollection fc)
         {
-            string straction = fc["action"].ToString();
-            //int rowid = Convert.ToInt32(fc["rowid"].ToString());
-            string cartid = fc["cartid"].ToString();
-            string prodid = fc["prodid"].ToString();
-            string strqty = fc["qty"].ToString();
-
-            // Validate
-            dbcon = GetConnection();
-            dbcon.Open();
-            CartLineItem.CUDCart(dbcon, straction, Int32.Parse(cartid), prodid, Int32.Parse(strqty));
-            dbcon.Close();  
-
-            return RedirectToAction("Cart");
+            try
+            {
+                if (!Valid_CartData(fc)) throw new Exception("Cart data invalid");
+                int intresult = 0;
+                int rowid = Convert.ToInt32(fc["rowid"].ToString());
+                string strprodid = fc["prod:" + rowid].ToString();
+                // int cartid = 100;
+                int cartid = 0;
+                if (Session["cartnumber"] != null)
+                    cartid = Convert.ToInt32(Session["cartnumber"].ToString());
+                dbcon = GetConnection();
+                dbcon.Open();
+                if (fc["action"] == "update")
+                {
+                    int qty = Convert.ToInt32(fc["qty:" + rowid].ToString());
+                    intresult = CartLineItem.CUDCart(dbcon, "update", cartid, strprodid, qty);
+                } else
+                    intresult = CartLineItem.CUDCart(dbcon, "delete", cartid, strprodid, 0);
+                dbcon.Close();
+                return RedirectToAction("Cart");
+            } catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+        public Boolean Valid_CartData(FormCollection fc)
+        {
+            if (fc["rowid"] == null || fc["action"] == null) return false;
+            if (Regex.IsMatch(fc["rowid"].ToString(), @"^([1-9]|[1-9][0-9])$"))
+            {
+                int rowid = Convert.ToInt32(fc["rowid"].ToString());
+                if (fc["prod:" + rowid] == null) return false;
+                if (fc["action"] == "update" &&
+                Regex.IsMatch(fc["qty:" + rowid].ToString(), @"^([1-9]|[1-9][0-9])$"))
+                    return true;
+                else if (fc["action"] == "delete")
+                    return true;
+            }
+            return false;
         }
     }
 }

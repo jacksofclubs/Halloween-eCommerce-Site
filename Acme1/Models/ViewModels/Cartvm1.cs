@@ -18,6 +18,7 @@ namespace Acme1.Models.ViewModels
         public int Quantity { get; set; }
         public string Imagefile { get; set; }
         public decimal TotalCost { get; set; }
+
         public static List<Cartvm1> GetCartList(SqlConnection dbcon, int id)
         {
             List<Cartvm1> itemlist = new List<Cartvm1>();

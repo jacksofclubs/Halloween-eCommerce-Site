@@ -24,6 +24,8 @@ namespace Acme1.Controllers
         {
             Customer cust;
             int custid = 136;
+            if (Session["custid"] != null)
+                custid = Convert.ToInt32(Session["custid"].ToString());
             try
             {
                 dbcon = GetConnection();
