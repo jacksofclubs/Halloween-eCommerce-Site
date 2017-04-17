@@ -14,12 +14,6 @@
             </th>
             <th>
                 Product Information
-                @*@Html.DisplayNameFor(model => model.Name)
-                @Html.DisplayNameFor(model => model.CategoryID)
-                @Html.DisplayNameFor(model => model.LongDescription)
-                @Html.DisplayNameFor(model => model.ShortDescription)
-                @Html.DisplayNameFor(model => model.UnitPrice)
-                @Html.DisplayNameFor(model => model.OnHand)*@
             </th>
             <th>
                 Action
@@ -32,6 +26,8 @@
                 <img src="~/Content/Images/Products/@Html.DisplayFor(modelItem => item.ImageFile)" class="img-products-index" />
             </td>
             <td>
+                Product ID: @Html.DisplayFor(modelItem => item.ProductID)
+                <br/>
                 Product Name: @Html.DisplayFor(modelItem => item.Name)
                 <br />
                 Short Description: @Html.DisplayFor(modelItem => item.ShortDescription)
