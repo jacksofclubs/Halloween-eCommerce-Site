@@ -22,13 +22,20 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a href="~/Product/Index">Products</a></li>
-                    <li><a href="~/Shopping/Index/fx">Special Effects</a></li>
-                    <li><a href="~/Shopping/Index/props">Props</a></li>
-                    <li><a href="~/Shopping/Index/costumes">Costumes</a></li>
-                    <li><a href="~/Shopping/Index/masks">Masks</a></li>
-                    <li><a href="~/Customer/Update">Customer</a></li>
-                    <li><a href="~/Shopping/Cart">Cart</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Menu<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="~/Shopping/Index/costumes">Costumes</a></li>
+                            <li><a href="~/Shopping/Index/masks">Masks</a></li>
+                            <li><a href="~/Shopping/Index/props">Props</a></li>
+                            <li><a href="~/Shopping/Index/fx">Special Effects</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="~/Customer/Update">My Info</a></li>
+                            <li><a href="~/Shopping/Cart">My Cart</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="~/Product/Index">Product Maintenance</a></li>
+                        </ul>
+                    </li>
                 </ul>
             </div>
         </div>
