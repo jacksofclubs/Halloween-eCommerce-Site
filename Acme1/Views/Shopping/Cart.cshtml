@@ -4,75 +4,7 @@
     ViewBag.Title = "Cart";
 }
 
-<h2>Cart</h2>
-
-@*<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.CartNumber)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ProductID)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ShortDescription)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.UnitPrice)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Quantity)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Imagefile)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.TotalCost)
-        </th>
-        <th></th>
-    </tr>
-
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.CartNumber)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ProductID)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ShortDescription)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.UnitPrice)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Quantity)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Imagefile)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.TotalCost)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-        </td>
-    </tr>
-}
-
-</table>*@
+<h2>My Cart</h2>
 
 <script>
     function fsubmit(udaction, qty, prodid) {
@@ -89,26 +21,63 @@
             document.forms[0].submit();
     }
 </script>
-@using (Html.BeginForm())
-{
-    <br />
-    <input type="hidden" name="action" value="none" />
-    <input type="hidden" name="cartid" value="100" />
-    <input type="hidden" name="prodid" value="" />
-    <input type="hidden" name="qty" value="" />
-
-    int x = 0;
-    string qty = "";
-    string prodid = "";
-    foreach (var item in Model)
+<table>
+    @using (Html.BeginForm())
     {
-        x = x + 1;
-        qty = "qty_" + @x;
-        prodid = "prod_" + @x;
-        <input type="hidden" name="@prodid" value="@item.ProductID" />
-        @Html.ActionLink(@item.Name, "Order", new { id = @item.ProductID })<br />
-        <input maxlength="2" size="2" name="@qty" type="text" value="@item.Quantity" />
-        <a href='javascript:fsubmit("update", "@qty", "@prodid");'>Update</a>
-        <a href='javascript:fsubmit("delete", "@qty", "@prodid");'>Delete</a><br /><br />
-    } @*for each*@
-}@* end of BeginForm*@
+
+        <input type="hidden" name="action" value="none" />
+        <input type="hidden" name="cartid" value="100" />
+        <input type="hidden" name="prodid" value="" />
+        <input type="hidden" name="qty" value="" />
+
+        int x = 0;
+        string qty = "";
+        string prodid = "";
+        decimal lineItemTotal = 0;
+
+        foreach (var item in Model)
+        {
+            x = x + 1;
+            qty = "qty_" + @x;
+            prodid = "prod_" + @x;
+            lineItemTotal = @item.Quantity * @item.UnitPrice;
+
+            <tr>
+                <input type="hidden" name="@prodid" value="@item.ProductID" />
+                <td>
+                    <img src="~/Content/Images/Products/@Html.DisplayFor(modelItem => item.Imagefile)" class="img-products-index" />
+                </td>
+                <td class="wide" style="width: 650px;">
+                    Product ID: @Html.DisplayFor(modelItem => item.ProductID)
+                    <br />
+                    Product Name: @Html.DisplayFor(modelItem => item.Name)
+                    <br />
+                    Description: @Html.DisplayFor(modelItem => item.ShortDescription)
+                    <br />
+                    Price: @Html.DisplayFor(modelItem => item.UnitPrice)
+                </td>
+                <td>
+
+                </td>
+                @*<td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.ProductID })
+                    <br />
+                    @Html.ActionLink("Delete", "Delete", new { id = item.ProductID })
+                </td>*@
+                <td style="width: 150px;">
+                    <input maxlength="2" size="2" name="@qty" type="text" value="@item.Quantity" />
+                    @*@Html.ActionLink(@item.Name, "Order", new { id = @item.ProductID })*@
+                    <a href='javascript:fsubmit("update", "@qty", "@prodid");'>Update</a>
+                    <a href='javascript:fsubmit("delete", "@qty", "@prodid");'>Delete</a>
+                </td>
+                <td style="width: 150px;">
+                    Line Item Total: $@lineItemTotal
+                </td>
+
+            </tr>
+
+
+        } @* end for each*@
+
+    }@* end of BeginForm*@
+</table>

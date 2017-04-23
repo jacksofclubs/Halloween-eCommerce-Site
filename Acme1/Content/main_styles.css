@@ -15,3 +15,6 @@
 .order_label {
     display: inline;
 }
+.wide {
+    width: 1000px;
+}

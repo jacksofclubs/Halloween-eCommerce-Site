@@ -26,7 +26,7 @@ namespace Acme1.Controllers
         {
             Customer cust;
             int custid = 136;
-            if (Session["custid"] != null)
+            if (Session["custid"] != null && Session["custid"] != "custid")
                 custid = Convert.ToInt32(Session["custid"].ToString());
             try
             {
@@ -42,6 +42,45 @@ namespace Acme1.Controllers
             }
             return View(cust);
         }
+
+        [Authorize]
+        [HttpPost]
+        public ActionResult Update(Customer ncust)
+        {
+            if (ModelState.IsValid)
+            {
+                int id = Convert.ToInt32(Session["custid"].ToString());
+                int intresult = 0;
+                Customer ocust, tcust;
+                try
+                {
+                    dbcon = GetConnection();
+                    dbcon.Open();
+                    ocust = Customer.GetCustomerSingle(dbcon, id, "");
+                    if (ncust.Email == ocust.Email)
+                    {
+                        intresult = Customer.CUDCustomer(dbcon, "update", ncust);
+                        ViewBag.message = "Profile updated - Click Menu button to continue";
+                    } else
+                    {
+                        tcust = Customer.GetCustomerSingle(dbcon, 0, ncust.Email);
+                        if (tcust.CustNumber == 0)
+                        {
+                            intresult = Customer.CUDCustomer(dbcon, "update", ncust);
+                            ViewBag.message = "Profile updated - Click Menu button to continue";
+                        } else ViewBag.error = "Update cancelled - Email Address already exists";
+                    }
+                    dbcon.Close();
+                    return View(ncust);
+                } catch (Exception ex)
+                {
+                    throw new Exception(ex.Message);
+                }
+            }
+            ViewBag.error = "Serious Error";
+            return View(ncust);
+        }
+
 
         [Authorize]
         [HttpPost]

@@ -58,6 +58,7 @@ namespace Acme1.Controllers
                         if (ReturnUrl.Length > 1 && Url.IsLocalUrl(ReturnUrl))
                         {
                             Session["custid"] = cust.CustNumber;
+                            // Session.Add("custid", cust.CustNumber);
                             FormsAuthentication.SetAuthCookie(login.Username, false);
                             return Redirect(ReturnUrl);
                         } else
