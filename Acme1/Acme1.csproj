@@ -119,6 +119,10 @@
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Images\icons\bats.png" />
+    <Content Include="Content\Images\icons\costume.png" />
+    <Content Include="Content\Images\icons\light.png" />
+    <Content Include="Content\Images\icons\mask.png" />
     <Content Include="Content\Images\Products\arm01.jpg" />
     <Content Include="Content\Images\Products\blacklight01.jpg" />
     <Content Include="Content\Images\Products\cat01.jpg" />

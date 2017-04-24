@@ -18,3 +18,14 @@ textarea {
 .pull-right {
     float: right;
 }
+.img-index {
+    max-height: 200px;
+    max-width: 200px;
+
+}
+.center {
+    text-align: center;
+    padding: 10px;
+    display: block;
+    margin: 20px 0px;
+}
