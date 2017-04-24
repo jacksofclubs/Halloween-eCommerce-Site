@@ -86,6 +86,12 @@
             <dd>
                 @Html.DisplayFor(model => model.OnHand)
             </dd>
+            <dt>
+                Product Image
+            </dt>
+            <dd>
+                <img src="~/Content/Images/Products/@Html.DisplayFor(model =>model.ImageFile)" class="img-products-index" />
+            </dd>
 
         </dl>
 
